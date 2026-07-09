@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>சான்றிதழ் | மேதகு களஞ்சியம்</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBFAF7;
+    --white:#FFFFFF;
+    --ink:#182B22;
+    --ink-soft:#4B5B52;
+    --green:#22C35E;
+    --green-deep:rgba(0, 0, 0, 0.977);
+    --shadow-sm:0 8px 20px rgba(24,43,34,0.10);
+    --shadow-md:0 20px 50px rgba(24,43,34,0.12);
+    --radius-lg:28px;
+    --radius-md:18px;
+    --radius-sm:12px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0; min-height:100vh; font-family:'Manrope',sans-serif; background:var(--paper); color:var(--ink);}
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  button{font-family:inherit; cursor:pointer;}
+  .navbar{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:16px 5%;background:rgba(16, 135, 178, 0.186);backdrop-filter:blur(12px);border-bottom:1px solid rgba(24,43,34,0.08);}
+  .brand{display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;font-weight:600;font-size:1.35rem;color:var(--green-deep);}
+  .brand .mark{width:34px;height:34px;min-width:34px;border-radius:50%;overflow:hidden;background:linear-gradient(145deg,var(--green),var(--green-deep));display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-sm);}
+  .brand .mark img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
+  .nav-panel{display:flex;align-items:center;gap:20px;}
+  .nav-links{display:flex;gap:24px;list-style:none;margin:0;padding:0;}
+  .nav-links a{font-weight:600;font-size:0.95rem;color:var(--ink-soft);position:relative;padding-bottom:4px;}
+  .nav-links a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:2px;background:var(--green);transition:width .25s ease;}
+  .nav-links a:hover::after{width:100%;}
+  .nav-toggle{display:none;width:48px;height:48px;background:rgba(16, 135, 178, 0.186);border-radius:16px;align-items:center;justify-content:center;gap:4px;flex-direction:column;padding:10px;border:none;}
+  .nav-toggle span{display:block;width:24px;height:3px;border-radius:999px;background:var(--ink);transition:transform .3s ease,opacity .2s ease;}
+  .nav-toggle.active span:nth-child(1){transform: translateY(8px) rotate(45deg);}
+  .nav-toggle.active span:nth-child(2){opacity:0;transform:scaleX(0);}
+  .nav-toggle.active span:nth-child(3){transform: translateY(-8px) rotate(-45deg);}
+  .nav-panel.open{position:absolute;top:72px;left:12px;right:12px;background:white;padding:18px 20px;box-shadow:var(--shadow-md);border-radius:24px;flex-direction:column;align-items:flex-start;gap:14px;}
+  .nav-panel.open .nav-links{flex-direction:column;width:100%;gap:10px;}
+  .certificate-shell{padding:60px 5%;max-width:980px;margin:0 auto;}
+  .certificate-card{background:#fff;border-radius:32px;box-shadow:var(--shadow-md);padding:42px 44px;position:relative;overflow:hidden;}
+  .certificate-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at top left, rgba(34,195,94,0.12), transparent 28%);pointer-events:none;}
+  .certificate-image{margin-bottom:32px;border-radius:28px;overflow:hidden;box-shadow:0 18px 40px rgba(24,43,34,0.1);position:relative;}
+  .certificate-image img{width:100%;height:auto;display:block;object-fit:cover;}
+  .certificate-seal-badge{
+    position:absolute; top:18px; right:18px; display:grid; place-items:center;
+    background:transparent; border:none; box-shadow:none; padding:0; z-index:5; pointer-events:none;
+  }
+  .certificate-seal-badge svg{width:48px; height:48px; display:block;}
+  .certificate-seal-badge svg path{fill:var(--green)}
+    /* tick next to badge (SVG styled below) */
+  
+  
+  @media (max-width:720px){ .certificate-seal-badge{ top:12px; right:12px; } .certificate-seal-badge svg{width:34px;height:34px;} }
+  .certificate-card-content{position:relative;z-index:1;}
+  .certificate-badge{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:999px;background:var(--green-soft);color:var(--green-deep);font-weight:700;font-size:0.95rem;margin-bottom:24px;}
+  .certificate-badge svg{width:26px;height:26px;flex-shrink:0}
+  .certificate-badge svg circle{stroke:rgba(34,195,94,0.36); fill:transparent; stroke-width:1.8}
+  .certificate-badge svg path{fill:var(--green)}
+  @media (max-width:720px){ .certificate-badge svg{width:20px;height:20px} }
+  /* Slightly smaller title so long Tamil lines fit better */
+  .certificate-title{font-family:'Fraunces',serif;font-size:clamp(1.6rem,2.6vw,2.4rem);line-height:1.08;margin:0 0 18px;}
+  .certificate-subtitle{font-size:1rem;color:var(--ink-soft);margin:0 0 34px;line-height:1.8;}
+  .certificate-text{font-size:1rem;color:var(--ink-soft);line-height:1.85;margin:0 0 32px;}
+  .certificate-portrait{display:grid;grid-template-columns:1fr 260px;gap:32px;align-items:start;margin-top:20px;}
+  .certificate-field{display:grid;gap:12px;}
+  .certificate-field strong{font-weight:700;color:var(--ink-deep);}
+  .certificate-seal{border:2px dashed rgba(34,195,94,0.35);padding:22px 18px;border-radius:22px;text-align:center;}
+  .certificate-seal h3{margin:0 0 10px;font-size:1rem;color:var(--green-deep);}
+  .certificate-seal p{margin:0;color:var(--ink-soft);line-height:1.6;font-size:0.95rem;}
+  .btn-back{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:13px 22px;border-radius:999px;background:#000;color:#fff;font-weight:700;transition:transform .2s ease,box-shadow .2s ease;}
+  .btn-back:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm);}
+  @media (max-width:860px){.nav-panel{display:none;opacity:0;transform:translateY(-14px);pointer-events:none;transition:opacity .28s ease,transform .28s ease;} .nav-toggle{display:flex;} .nav-panel.open{display:flex;opacity:1;transform:translateY(0);pointer-events:auto;} }
+  @media (max-width:720px){.certificate-card{padding:28px 24px;} .certificate-portrait{grid-template-columns:1fr;gap:18px;} }
+  @media (max-width:520px){.certificate-shell{padding:40px 4%;} .certificate-title{font-size:1.3rem;} }
+</style>
+</head>
+<body>
+<nav class="navbar">
+  <a href="index.html" class="brand"><span class="mark"><img src="logo.png" alt="Logo"></span>மேதகு களஞ்சியம்</a>
+  <div class="nav-panel">
+    <ul class="nav-links">
+      <li><a href="index.html">முகப்பு</a></li>
+      <li><a href="certificate.html" aria-current="page">சான்றிதழ்</a></li>
+    </ul>
+  </div>
+  <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+<main class="certificate-shell">
+  <article class="certificate-card">
+    <div class="certificate-card-content">
+      <span class="certificate-badge">அங்கீகாரம்
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <circle cx="12" cy="12" r="10" />
+          <path d="M20.285 6.708a1 1 0 0 1 0 1.414l-10.285 10.285a1 1 0 0 1-1.414 0L3.714 13.614a1 1 0 0 1 1.414-1.414l4.143 4.143L18.871 6.708a1 1 0 0 1 1.414 0z" />
+        </svg>
+      </span>
+      <div class="certificate-image">
+          <img src="certificate.jpeg" alt="Certificate">
+      </div>
+      <h1 class="certificate-title">மேதகு களஞ்சியம் புத்தக சேவை சான்றிதழ்</h1>
+      <p class="certificate-subtitle"><strong>அரசு அங்கீகாரம்:</strong> மேதகு களஞ்சியம் இந்திய அரசின் எம்.எஸ்.எம்.இ (MSME) துறையின் கீழ் முறையாகப் பதிவு செய்யப்பட்ட சட்டப்பூர்வமான நிறுவனம்.<br><strong>தொழில்முறைப் பாதுகாப்பு:</strong> அரசாங்க விதிமுறைகளைப் பின்பற்றி இயங்குவதால், எங்களுடனான உங்கள் வணிகப் பரிவர்த்தனைகள் அனைத்தும் பாதுகாப்பானவை என்று உறுதியளிக்கிறோம்.<br><strong>விரிவான செயல்பாட்டு எல்லை:</strong> சிறு வணிகம் முதல் பெரு நிறுவனங்கள் வரையிலான அனைத்துத் தரப்பினரின் புத்தகத் தேவைகளையும் முழுப் பொறுப்புடன் நிறைவேற்றும் தகுதி பெற்றுள்ளோம்.<br></p>
+      <p class="certificate-text">
+        <div class="certificate-field">
+          <p><strong>பெயர்:</strong> மேதகு களஞ்சியம்</p>
+          <p><strong>பதிவு எண்:</strong> UDYAM-TN-18-0101323</p>
+          <p><strong>தொடர்பு:</strong> +91 8248654946</p>
+          <p><strong>மின்னஞ்சல்:</strong> methagukalanjiyam@gmail.com</p>
+        </div>
+        <div class="certificate-seal">
+          <h3>உறுதி</h3>
+          <p>இச்சான்றிதழ் எங்களின் தொழில்முறை நாணயத்திற்கும், வாடிக்கையாளர்களுக்கு நாங்கள் வழங்கும் சேவையின் தரத்திற்கும் சான்றாக விளங்குகிறது.</p>
+        </div>
+      </div>
+      <div style="margin-top:32px;">
+        <a class="btn-back" href="index.html">முகப்புக்கு திரும்புக</a>
+      </div>
+    </div>
+  </article>
+</main>
+<script>
+  const navToggleBtn = document.querySelector('.nav-toggle');
+  const navPanelEl = document.querySelector('.nav-panel');
+  if (navToggleBtn && navPanelEl){
+    const closeMenu = () => {
+      navPanelEl.classList.remove('open');
+      navToggleBtn.classList.remove('active');
+      navToggleBtn.setAttribute('aria-expanded','false');
+      navToggleBtn.setAttribute('aria-label','Open menu');
+    };
+    navToggleBtn.addEventListener('click', () => {
+      const isOpen = navPanelEl.classList.toggle('open');
+      navToggleBtn.classList.toggle('active', isOpen);
+      navToggleBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      navToggleBtn.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+    });
+    navPanelEl.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
+    document.addEventListener('click', (event) => {
+      if (!navPanelEl.contains(event.target) && !navToggleBtn.contains(event.target)) {
+        closeMenu();
+      }
+    });
+  }
+</script>
+</body>
+</html>

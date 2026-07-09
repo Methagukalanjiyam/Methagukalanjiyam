@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Details | மேதகு களஞ்சியம்</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBFAF7;
+    --white:#FFFFFF;
+    --ink:#182B22;
+    --ink-soft:#4B5B52;
+    --green-deep:#000000;
+    --green:#22C35E;
+    --green-soft:#E4F5EC;
+    --gold:#C89A3A;
+    --shadow-sm: 0 2px 10px rgba(24,43,34,0.06);
+    --shadow-md: 0 12px 30px rgba(24,43,34,0.10);
+    --radius-lg: 28px;
+    --radius-md: 18px;
+    --radius-sm: 12px;
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{ margin:0; min-height:100vh; font-family:'Manrope',sans-serif; background:var(--paper); color:var(--ink); }
+  a{ text-decoration:none; color:inherit; }
+  img{ max-width:100%; display:block; }
+  button{ font-family:inherit; }
+  body::before{ content:''; position:fixed; inset:0; background: radial-gradient(circle at top left, rgba(34,195,94,0.12), transparent 32%), radial-gradient(circle at bottom right, rgba(14,107,87,0.08), transparent 28%); pointer-events:none; }
+  .navbar{ position:sticky; top:0; z-index:100; display:flex; justify-content:space-between; align-items:center; gap:20px; padding:18px 5%; background:rgba(16, 135, 178, 0.186); backdrop-filter:blur(12px); border-bottom:1px solid rgba(24,43,34,0.08); }
+  .brand{ display:flex; align-items:center; gap:10px; font-family:'Fraunces',serif; font-weight:600; font-size:1.25rem; color:var(--green-deep); }
+  .brand .mark{ width:34px; height:34px; min-width:34px; min-height:34px; border-radius:50%; overflow:hidden; background:linear-gradient(145deg, var(--green), var(--green-deep)); display:flex; align-items:center; justify-content:center; box-shadow: var(--shadow-sm); flex-shrink:0; aspect-ratio:1/1; }
+  .brand .mark img{ width:100%; height:100%; object-fit:cover; display:block; border-radius:50%; }
+  .nav-actions{ display:flex; gap:12px; align-items:center; }
+  .nav-link{ color:var(--ink-soft); font-weight:600; }
+  .page-shell{ max-width:1160px; margin:0 auto; padding:40px 5% 80px; }
+  .detail-grid{ display:grid; grid-template-columns: minmax(0, 420px) 1fr; gap:40px; align-items:start; }
+  .detail-cover{ border-radius:26px; overflow:hidden; box-shadow:var(--shadow-md); background:var(--white); }
+  .detail-cover img{ width:100%; height:100%; object-fit:cover; }
+  .detail-meta{ display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:20px; }
+  .detail-badge{ padding:8px 14px; border-radius:999px; background:var(--green-soft); color:var(--green-deep); font-weight:700; font-size:0.85rem; }
+  .detail-title{ font-family:'Fraunces',serif; font-size:clamp(2.2rem, 3vw, 3rem); line-height:1.05; margin:0 0 12px; }
+  .detail-author{ font-size:1rem; color:var(--ink-soft); margin:0 0 24px; }
+  .detail-price{ font-size:2rem; font-weight:800; color:var(--green-deep); }
+  .rating-line{ display:flex; align-items:center; gap:10px; color:var(--gold); font-weight:700; margin-bottom:22px; }
+  .rating-line span{ display:flex; align-items:center; gap:8px; }
+  .rating-line em{ color:var(--ink-soft); font-style:normal; font-weight:500; }
+  .detail-text{ color:var(--ink-soft); line-height:1.8; margin:0 0 26px; }
+  .detail-list{ display:grid; gap:14px; margin:0 0 32px; }
+  .detail-list span{ display:block; font-size:0.95rem; color:var(--ink-soft); }
+  .detail-list strong{ color:var(--ink); font-weight:700; }
+  .cta-row{ display:flex; flex-wrap:wrap; gap:14px; }
+  .btn-primary, .btn-secondary{ display:inline-flex; align-items:center; justify-content:center; gap:10px; border-radius:999px; padding:16px 24px; font-weight:700; transition:transform .2s ease, box-shadow .2s ease; }
+  .btn-primary{ background:#000; color:#fff; }
+  .btn-secondary{ background:rgba(24,43,34,0.06); color:var(--ink); }
+  .btn-primary:hover, .btn-secondary:hover{ transform:translateY(-2px); box-shadow:var(--shadow-sm); }
+  .book-card-row{ display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:20px; margin-top:50px; }
+  .book-card-small{ background:var(--white); border-radius:22px; overflow:hidden; box-shadow:var(--shadow-sm); transition:transform .25s ease, box-shadow .25s ease; }
+  .book-card-small:hover{ transform:translateY(-5px); box-shadow:var(--shadow-md); }
+  .book-card-small img{ width:100%; aspect-ratio:3/4; object-fit:cover; }
+  .book-card-small .info{ padding:16px; }
+  .book-card-small .title{ font-weight:700; margin-bottom:6px; }
+  .book-card-small .author{ color:var(--ink-soft); font-size:0.9rem; margin-bottom:12px; }
+  .book-card-small .price{ font-weight:700; color:var(--green-deep); }
+  .footer{ margin-top:80px; padding:30px 0 12px; text-align:center; color:rgba(24,43,34,0.45); font-size:0.85rem; }
+  @media (max-width:960px){ .detail-grid{ grid-template-columns:1fr; } }
+  @media (max-width:640px){
+    .navbar{ flex-wrap:wrap; } .nav-actions{ width:100%; justify-content:space-between; }
+    .book-card-row{ grid-template-columns:repeat(2, 1fr); gap:12px; }
+    .book-card-small .info{ padding:10px; }
+    .book-card-small .title{ font-size:0.82rem; margin-bottom:3px; }
+    .book-card-small .author{ font-size:0.7rem; margin-bottom:6px; }
+    .book-card-small .price{ font-size:0.85rem; }
+  }
+</style>
+</head>
+<body>
+<nav class="navbar">
+  <a href="index.html" class="brand"><span class="mark"><img src="logo.png" alt="Logo"></span>மேதகு களஞ்சியம்</a>
+  </div>
+</nav>
+<main class="page-shell">
+  <section id="bookDetail" class="detail-grid">
+    <div class="detail-cover">
+      <img id="detailImage" src="" alt="Book cover">
+    </div>
+    <div>
+      <div class="detail-meta">
+        <span id="detailBadge" class="detail-badge"></span>
+        <span class="detail-price" id="detailPrice"></span>
+      </div>
+      <h1 class="detail-title" id="detailTitle"></h1>
+      <p class="detail-author" id="detailAuthor"></p>
+      <div class="rating-line"><span id="detailRating"></span><em id="detailRatingText"></em></div>
+      <p class="detail-text" id="detailDescription"></p>
+      <div class="detail-list">
+        <span><strong>வகையினம்:</strong> <span id="detailGenre"></span></span>
+        <span><strong>பக்கங்கள்:</strong> <span id="detailPages"></span></span>
+        <span><strong>கிடைப்பு:</strong> <span id="detailAvailability"></span></span>
+      </div>
+      <div class="cta-row">
+        <a id="orderButton" class="btn-primary" href="#" target="_blank" rel="noopener">புலனம் வழி வாங்குக</a>
+        <a class="btn-secondary" href="index.html">தொகுப்பிற்குத் திரும்புக</a>
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2 style="font-family:'Fraunces',serif; margin:50px 0 20px;">பல நூல்களை உலாவுக</h2>
+    <div id="relatedBooks" class="book-card-row"></div>
+  </section>
+</main>
+<footer class="footer">© 2026 மேதகு களஞ்சியம். புத்தக விவரப் பக்கம்.</footer>
+<script>
+  const WHATSAPP_NUMBER = "916384654946";
+  const books = [
+    { title:"புறநானூற்று வீரன்", author:"திருமுருகன்காளிலிங்கம்", price:"₹499.00", rating:4.9, badge:"பெருவிற்பனை", cover:"book 7.jpeg", description:"ஆனையிறவில் புலிக்கொடி பறந்து நானூறு ஆண்டுகள் ஆயிற்று. எத்தனையோ புரட்சியாளர்கள், புரட்சிப்படைகள் மண்ணில் முளைத்த போதும் ஆனையிறவில் புலிக்கொடி பறக்க இயலவில்லை. இவ்வாறிருக்க நானூறு ஆண்டுகளுக்குப் பிறகு ஆனையிறவில் புலிக்கொடியை விடுதலைப்புலிகள் எவ்வாறு ஏற்றினர் என்பதைக் கூறும் படைப்பே புறநானூற்று வீரன்.ஆனையிறவுப் போரை 'இன்னொரு திபன்-பியன்-பூ' என்றும், 'இன்னொரு கீ-சங்க்' என்றும், 'இன்னொரு லெனின் கிராட்' என்றும் உலகம் ஏன் சொன்னது என்பதைக் கூறும் படைப்பே புறநானூற்று வீரன்.", வகையினம்:"ஆவண நூல்", பக்கங்கள்:352, availability:"இருப்பில் உள்ளது" },
+    { title:"கண்டேன் கண்டேன் தலைவரை கண்டேன்", author:"பேரா.அறிவரசன்", price:"₹79.99", rating:4.9, badge:"பெருவிற்பனை", cover:"book 3.jpeg", description:"பேரா.அறிவரசன்: இந்த ஆண்டின் இறுதிக்குள் தமிழீழம் மலருமா? தேசியத் தலைவர்: ஐயா! ஒரு தேசிய இனத்தின் விடுதலைப் போராட்டத்தின் வெற்றி என்பது அடக்குவோர் -அடக்கப்படுவோர் என்ற இரு திறத்தாரைப் பொறுத்ததாக இன்றையச் சூழல் இல்லை. வலிமை வாய்ந்த சில உலக நாடுகளின் அரசியல் போக்குகளைப் பொறுத்ததாக இருக்கிறது. உலக அரசியல் போக்குகள் எமக்கு வாய்ப்பாக அமைந்தால் இரண்டு ஆண்டுகளுக்குள் எமக்கு விடுதலை கிடைக்கலாம்; எதிராகப் போகுமானால் விடுதலை கிடைக்க இருபது ஆண்டுகளும் ஆகலாம். எத்தனை ஆண்டுகள் ஆனாலும் எத்தகைய நெருக்கடிகள் எம்மைச் சூழ்ந்தாலும் எம் தாயக விடுதலையைப் பெறாமல் நாங்கள் ஓயமாட்டோம்", வகையினம்:"பயண கட்டுரை", பக்கங்கள்: 248, availability:"இருப்பில் உள்ளது" },
+    { title:"மேதகு செயல்மொழி", author:"இரா.பொ.இரவிசந்திரன்", price:"₹99.99", rating:4.8, badge:"", cover:"book 8.png", description:"ஒரு விடுதலைப் போராட்டத்தில் சாவும் அழிவும் துன்பமும் துயரமும் தவிர்க்க முடியாதவை. பெரிய தியாகங்கள் அர்ப்பணிப்புகள் புரிந்துதான் நாம் நமது விடுதலையை வென்றெடுக்க வேண்டும்.", வகையினம்:"ஆளூமை கையேடு", பக்கங்கள்:56, availability:"இருப்பில் உள்ளது" },
+    { title:"தீலீபனுடன் 12 நாட்கள்", author:"கவிஞர் மு.வே.யோ.வாஞ்சிநாதன்", price:"₹99.99", rating:4.8, badge:"", cover:"book 2.jpeg", description:"திலீபனைக் கொல்வதற்கு அவர்கள் திடமனம் பூண்டுவிட்டனர் என்பது புரிந்துவிட்டது. அதோ வானத்தில் ஓர் வயோதிக உருவம் முகில்களைக் கிழித்துக்கொண்டு என்னையே பார்த்துக்கொண்டிருக்கிறது. அவ்வுருவத்தின் தலையிலே மயிரில்லை.. கண்களில் வெள்ளைக் கண்ணா... அந்தக் கண்களில் அருவியாக வழிந்து கொண்டிருக்கிறது. அது என்ன? இரத்தமா? அந்த மனிதன் இரத்தக் கண்ணீர் சொரிகிறாரே... ஏன்? ஏன்? அடுத்து வேறு ஒரு உருவம்! அதன் தலையிலும் மயிரைக் காணவில்லை...வானத்தின் நடுவிலே வெள்ளரசு மரத்தின் அடியிலே அமர்ந்திருக்கும் அந்த உருவம் எம்மை, இல்லை திலீபனையே பார்த்துக்கொண்டிருக்கிறது. பெளர்ணமி நிலவில் அந்தக் கருணை முகத்திலே... கருணையைத் தேடுகின்றேன்... ஆனால் காணமுடியவில்லை... ஏன்... ஏன்..? இந்திய மண்ணில் என்றோ தோன்றி மறைந்துவிட்ட அந்த இரு சோதிகளும் அல்ல, உருவங்களும் வெகுநேரம் திலீபனைப்பார்க்க முடியாமல் வெட்கித் தலைகுனிந்தவாறு சிறிது சிறிதாக என் கண்களை விட்டு மறைந்து கொண்டிருக்கின்றன.", வகையினம்:"வரலாற்று பதிவு", பக்கங்கள்:72, availability:"இருப்பில் உள்ளது" },
+    { title:"வரலாற்று தலைவனின் வழிகாட்டல்", author:"சு.ரவி", price:"₹149.99", rating:4.7, badge:"", cover:"book 6.jpeg", description:"நூலாசிரியர் சுப்பையா ரவி 1980களிலிருந்து விடுதலைப் புலிகள் இயக்கத்தின் முழுநேர ஆதரவாளராக செயல்பட்டார். 1984ல் கைகுண்டு வைத்திருந்தார் என்ற குற்றச்சாட்டில் கைதாகி மூன்றாண்டுகள் சித்திரவதைகளை அனுபவித்து 1987ல் விடுதலையானார். யாழ். மாவட்டத் தளபதியாக இருந்த கிட்டு அவர்களிடம் போராளியாக இணைந்து கொண்டார்.1989 பாலமோட்டைக் காடுகளில் பணியாற்றிக் கொண்டிருந்தபோது தலைவர் மேதகு வே.பிரபாகரனால் நேரடிப் பணிப்பில் 'விடுதலைப்புலிகள்' பத்திரிகையின் ஆசிரியராகவும் அந்தத் துறையின் பொறுப்பாளராகவும் நியமிக்கப்பட்டார்.'எள்ளாளன்' என்ற மறுபெயரிலும் இவரது ஆக்கங்கள் பிரசுரமாகியுள்ளது.1994 ஆண்டு 'படியுங்கள்-அறியுங்கள்' என்ற சஞ்சிகையை உருவாக்கினார். தமிழ்த்தாய் நாட்காட்டியின் முதற்கரு உருவானது இவரது உள்ளத்தில் தான். தமிழ்த்தாய் பதிப்பகம், வெளியீட்டுப் பிரிவு போன்ற பதிப்பகங்களூடாக இருபத்தைந்து புத்தகங்களிற்கும் அதிகமாக வெளியீடு செய்துள்ளார்.இவர் விடுதலைப் புலிகளின் கொள்கை விளக்கப் பேச்சாளர்களில் மிக முக்கியமானவர்.", வகையினம்:"ஆவணத் தொகுப்பு", பக்கங்கள்:96, availability:"இருப்பில் உள்ளது" },
+    { title:"தமிழீழ விடுதலைப் போரும், தமிழீழ விடுதலைப் புலிகளும்", author:"மாணவர் ஒருங்கிணைப்புக்குழு ( 1988 )", price:"₹149.99", rating:4.8, cover:"book 4.jpeg", description:"கடந்த காலத்தில் தமிழீழ விடுதலைப் போராட்டத்தில் ஏற்பட்ட துன்பங்கள், விடுதலைப் புலிகளின் செயற்பாடுகள் ஆகியவற்றை வெளிக்கொணர முயற்சித்துள்ளோம்.தமிழீழ விடுதலைப்போரும் தமிழீழ விடுதலைப் புலிகளும் என்ற இச்சிறு நூலை விடுதலை வேண்டி மறைந்த அனத்துப் போராளிகளின் நினைவாகவும் மறைந்த மக்களின் நினைவாகவும் சமர்ப்பிக்கின்றோம்", வகையினம்:"வரலாறு", பக்கங்கள்:144, availability:"இருப்பில் உள்ளது" },
+    { title:"தோழர் தமிழரசன் மூன்று அறிக்கைகள்", author:"நந்தகுமார். ந", price:"₹199.99", rating:4.7, badge:"", cover:"book 5.jpeg", description:"<ul><strong>தமிழ்நாடு விடுதலைக்குப் பின் தமிழ் மக்கள் குடியரசு ஆட்சியின் திட்டங்கள்.</strong><li>இந்தி உட்பட அனைத்து ஏகாதிபத்திய சார்பு முதலாளித்துவத்திலுள்ள தொழிற்சாலைகளையும் பறிமுதல் செய்து தமிழ்நாட்டுடமையாக்குவது.</li><li>தமிழ்நாட்டில் உள்ள அனைத்து வங்கிகளையும் தமிழ்நாட்டுடமையாக்குவது.</li><li>அந்நிய ஏகாதிபத்தியங்களின் தொழிற்சாலைகளையும் தமிழ்நாட்டுடமையாக்குவது.</li><li>தமிழ் மொழி மற்றும் நிர்வாகத்தை முழுமையாக தமிழ் மொழியில் நடத்துவது.</li><li>கல்வி துறையில் தமிழ் மொழியை பயிற்று மொழியாக மாற்றுவது.</li><li>கொல்லிமலை கட்சி மாநாட்டில் 1986-ஆம் ஆண்டு முன்வைக்கப்பட்ட அறிக்கை.</li></ul>", வகையினம்:"அரசியல்", பக்கங்கள்:208, availability:"இருப்பில் உள்ளது" },
+    { title:"மக்கள் துணையோடு மரணத்தை வென்றேன்", author:"புலவர் கலியபெருமாள்", price:"₹149.99", rating:4.5, cover:"book 9.jpeg", description:"சாவுக்கஞ்சாது பல சாகசங்கள் புரிந்த மாவீரனின் வரலாறு ஒரு புரட்சிகர நெடும்பயணமாகும். தனது வியத்தகு வாழ்வியல் அனுபவங்களை அவர் இந்த நூலில் பதிவு செய்துள்ளார். அவர்பட்ட பாடுகளை, அனுபவித்த துன்பங்களை வரலாற்றின் இரத்த வரிகளாக நாம் காணும்போது நமது விழிகள் கோபத்தால் சிவக்கின்றன. கண்ணீரால் குளமாகின்றன. சில நேரங்களில் இப்படிபட்ட வீர வாழ்வா என வியப்பில் நம் விழி புருவங்கள் உயர்கின்றன.", வகையினம்:"சுயசரிதை & வாழ்க்கை வரலாறு", பக்கங்கள்:10, availability:"இருப்பில் உள்ளது" },
+    { title:"வரலாறு எனது வழிகாட்டி", author:"நேர்காணல் புத்தக வடிவம்", price:"₹59.99", rating:4.3, cover:"book 10.jpeg", description:"தமிழ்நாட்டில் பிரபாகரன் அவர்கள் தங்கியிருந்தபோது, பிரபல ஆங்கில வார இதழான 'சண்டே' (SUNDAY) இதழுக்காக (11-17 மார்ச், 1984) மூத்த பத்திரிகையாளர் அனிதா பிரதாப் அவர்களுக்கு அளித்த வரலாற்றுச் சிறப்புமிக்க முதல் அதிகாரப்பூர்வ நேர்காணலின் தமிழாக்கம் ஆகும்.இப்புத்தகத்தின் தலைப்பு அவரது புகழ்பெற்ற கூற்றான இயற்கை எனது நண்பன், வாழ்க்கை எனது தத்துவாசிரியன், வரலாறு எனது வழிகாட்டி என்பதிலிருந்து பெறப்பட்டது.", வகையினம்:"ஆவணத் தொகுப்பு", பக்கங்கள்:50, availability:"இருப்பில் உள்ளது" },
+    { title:"மாமனிதர் திருவேங்கடம் வேலுப்பிள்ளை", author:"பேரா.அறிவரசன்", price:"₹49.99", rating:4.4, cover:"book 1.jpeg", description:"அறவழி முதுமையடைந்து தளர்ந்துவிட்டது; ஆயுதப் போராட்ட வழி இளமைத் துடிப்புடன் எழுந்துவிட்டது என்பதைப் புரிந்து கொண்ட திரு. வேலுப்பிள்ளை அவர்கள் மகன் பிரபாகரனைத் தடுக்கவில்லை.", வகையினம்:"சிறு தொகுப்பு", பக்கங்கள்:24, availability:"இருப்பில் உள்ளது" },
+    { title:"தமிழர் படையின் சாதனை சமர்", author:"சு.ரவி", price:"₹199.99", rating:4.7, cover:"book 11.jpeg", description:"<p>இந்தநூலின் ஆசிரியர் திரு.சுப்பையா ரவீந்திரன் அவர்கள், தமிழீழ விடுதலைப்புலிகள் இயக்கத்தின் அதிகார விடுதலைப்புலிகள் பத்திரிகையின் பிரதம ஆசிரியராக செயற்பட்டவர். இதன் நிமித்தமாக இவர் 'விடுதலைப்புலிகள் ரவி என அழைக்கப்பட்டார்.</p><p>இவர் சுமார் இருபத்தைந்து ஆண்டு காலம் தமிழீழ விடுதலைப்புலிகள் இயக்கத்தில் செயற்பட்ட மூத்த போராளிகளில் ஒருவர்.</p><p>தனது இருபத்தைந்து ஆண்டுகால போராட்ட வாழ்வில், சுமார் இருபது ஆண்டு காலம் விடுதலைப்புலிகள் இயக்கத்தின் வெளியீட்டுப்பிரிவிற்கு பொறுப்பாளராகவும், பத்திரிகையின் ஆசிரியராகவும் செயற்பட்ட அனுபவத்தை கொண்டுள்ளார்.</p><p>இந்திய -புலிகள் போர்க்காலத்தில் காடுகளிற்குள் தொடங்கிய இவரது எழுத்து பணி இன்றளவும் தொடர்வது பாராட்டுக்குரியது.</p><p>ஆயிரத்து தொளாயிரத்து தொண்ணூறாம் ஆண்டு விடுதலைப்புலிகள் பத்திரிகையின் ஆசிரியாராக பொறுப்பேற்ற இவர் விடுதலைப்புலிகள் பத்திரிகை மட்டுமன்றி அமைப்பின் அதிகாரப்பூர்வ வெளியீடுகள், அமைப்பின் பல உள்ளக வெளியீடுகள், வரலாறு நூல்கள், அறிக்கைகள் என்பன வெளிவருவதற்கு காரணமாக இருந்தவர்.</p><p>முப்பது ஆண்டு காலத்திற்கும் மேலான விடுதலைப்புலிகள் இயக்கத்தின் போராட்ட வரலாற்றில் தடந்தேறிய போர்கள், வரலாற்று சம்பவங்கள், திருப்புமுனைகள், அரசியல் நிகழ்வுகள் என்பவற்றை தரிசித்தவர் மட்டுமன்றி அவற்றை தனது பல்வேறு கட்டுரைகளில் பதிவு செய்யவுக்கும் தவறவில்லை. அவை எதிர்கால சந்ததிகளுக்கு பயனுள்ள வரலாற்று பொக்கிஷங்களாக அமையப்பெறும்.</p>", வகையினம்:"வரலாறு", பக்கங்கள்:172, availability:"இருப்பில் உள்ளது" } ];
+
+  function getQueryParam(name){
+    return new URLSearchParams(window.location.search).get(name);
+  }
+
+  function formatStars(rating){
+    return `${'★'.repeat(Math.round(rating))} <span style="font-size:0.92rem;color:var(--ink-soft);">${rating.toFixed(1)}</span>`;
+  }
+
+  function renderBook(book){
+    document.getElementById('detailImage').src = book.cover;
+    document.getElementById('detailImage').alt = `Cover of ${book.title}`;
+    document.getElementById('detailTitle').textContent = book.title;
+    document.getElementById('detailAuthor').textContent = `எழுத்தாளர் - ${book.author}`;
+    document.getElementById('detailPrice').textContent = book.price;
+    document.getElementById('detailRating').innerHTML = formatStars(book.rating);
+    document.getElementById('detailRatingText').textContent = `(${book.rating.toFixed(1)} / 5)`;
+    document.getElementById('detailDescription').innerHTML = book.description;
+    const genre = book.genre ?? book['வகையினம்'] ?? 'Unknown';
+    const pages = book.pages ?? book['பக்கங்கள்'];
+    document.getElementById('detailGenre').textContent = genre;
+    document.getElementById('detailPages').textContent = pages ? `${pages} பக்கங்கள்` : 'Pages unavailable';
+    document.getElementById('detailAvailability').textContent = book.availability;
+    document.getElementById('detailBadge').textContent = book.badge || '';
+    document.getElementById('orderButton').href = `https://wa.me/${WHATSAPP_NUMBER}`;
+  }
+
+  function renderRelated(excludeIndex){
+    const container = document.getElementById('relatedBooks');
+    books.forEach((book, index) => {
+      if (index === excludeIndex) return;
+      const item = document.createElement('a');
+      item.href = `book.html?id=${index}`;
+      item.className = 'book-card-small';
+      item.innerHTML = `
+        <img src="${book.cover}" alt="Cover of ${book.title}">
+        <div class="info">
+          <div class="title">${book.title}</div>
+          <div class="author">${book.author}</div>
+          <div class="price">${book.price}</div>
+        </div>
+      `;
+      container.appendChild(item);
+    });
+  }
+
+  const id = parseInt(getQueryParam('id'), 10);
+  const book = Number.isInteger(id) && books[id] ? books[id] : null;
+  if (!book){
+    document.getElementById('bookDetail').innerHTML = '<div style="grid-column:1/-1; padding:40px; background:var(--white); border-radius:24px; box-shadow:var(--shadow-md); text-align:center;"><h1 style="margin-bottom:14px;">Book not found</h1><p style="color:var(--ink-soft); margin-bottom:24px;">Please return to the collection and select a valid book.</p><a class="btn-secondary" href="index.html">Back to Collection</a></div>';
+  } else {
+    renderBook(book);
+    renderRelated(id);
+  }
+</script>
+</body>
+</html>
